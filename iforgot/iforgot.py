@@ -16,12 +16,13 @@ VAL_PRINT = True
 
 
 class Command:
-    def __init__(self, keywords, command):
+    def __init__(self, keywords, command, help=None):
         '''
         Create command with keywords
         :param keywords: keywords for command
         :param command: list of arguments
         '''
+        self.help = help
         self.keywords = keywords
         self.essentials = []
         for i in xrange(len(self.keywords)):
@@ -67,6 +68,9 @@ class Command:
             if p in self.flags:
                 score += FLAG_SCORE
         return score
+
+    def getHelp(self):
+        return self.help
 
     def getcmd(self, prompt):
         if type(prompt) == str:
@@ -114,10 +118,15 @@ def load_until_semicolon(path=RULES_PATH):
 
 def load_next_rule(path=RULES_PATH):
     for text in load_until_semicolon(path):
-        c_loc = text.find(":")
-        if c_loc > -1:
-            kwords, cmd = (text[:c_loc].strip(), text[c_loc+1:].strip())
-            yield Command(kwords.split(), cmd.replace("\;",";").split())
+        c_tabl = text.split("::")
+        if len(c_tabl)>1:
+            kwords = c_tabl[0]
+            cmd = c_tabl[1]
+            helpmsg = None
+            if len(c_tabl)>2:
+                helpmsg = c_tabl[1]
+                cmd = "::".join(c_tabl[2:])
+            yield Command(kwords.split(), cmd.replace("\;",";").split(),help=helpmsg)
 
 
 def check(arglist):
@@ -132,9 +141,17 @@ def check(arglist):
         elif cmdt[0] < MATCH_CUTOFF*top_score:
             break
         if VAL_PRINT:
-            print("["+str(cmdt[0])+"]\t>> "+cmdt[1].getcmd(arglist))
+            if cmdt[1].getHelp():
+                print("["+str(cmdt[0])+"]\t"+cmdt[1].getHelp())
+                print("\t>> "+cmdt[1].getcmd(arglist))
+            else:
+                print("["+str(cmdt[0])+"]\t>> "+cmdt[1].getcmd(arglist))
         else:
-            print(">> "+cmdt[1].getcmd(arglist))
+            if cmdt[1].getHelp():
+                print("\t "+cmdt[1].getHelp())
+                print("\t>> "+cmdt[1].getcmd(arglist))
+            else:
+                print("\t>> "+cmdt[1].getcmd(arglist))
         i += 1
         if i == 5:
             break

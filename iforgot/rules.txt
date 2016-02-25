@@ -1,4 +1,4 @@
-## KEYWORDS : ARGUMENT ;
+## KEYWORDS :: [HELP] :: ARGUMENT ;
 ## * denotes a vital keyword
 ## each group of * indicates a set of words of which at least one is necessary
 ## <x> in command will be replaced by args
@@ -6,40 +6,68 @@
 ## <x:description> means x is a flag, but description is displayed if no
 ##      substitution is made
 
-how to edit change my *iforgot/rules* file:
+how to edit change my *iforgot/rules* file::
     nano <RULES>
 
-how to change my *MAC/mac* address to :
+how to change my *MAC/mac* address to ::
     spoof set <to/address:addr> en0;
-how to change my *MAC/mac* address to on:
+
+how to change my *MAC/mac* address to on::
     spoof set <to/address:addr> <on:interface>;
-how to change my *MAC/mac* address random randomize:
+
+how to change my *MAC/mac* address random randomize::
     spoof randomize <on:interface>;
 
-how to update *homebrew/brew* :
+how to update *homebrew/brew*::
     brew update; brew upgrade;
 
-how to *merge* *git* branches branch :
+how to *merge* *git* branches branch::
+    Merged branch into master. May reverse to merge master into branch::
     git checkout master\; git merge <branch>;
 
-how to get *git* *stat/status/missing/added* :
+how to get *git* *stat/status/missing/added*::
+    Displays list of modified, tracked and added files::
     git status;
 
-how to *commit/push* with *svn* :
+how to *commit/push* with *svn*::
+    Opens editor for commit message::
     svn ci;
-how to *commit/push* with *svn* with message :
+how to *commit/push* with *svn* with message::
+    Bypasses editor::
     svn ci -m "<message>";
 
-how to run a *python* *simple/server/SimpleServer/http*:
+how to run a *python* *simple/server/SimpleServer/http*::
+    Shares all files in current working directory::
     python -m SimpleHTTPServer 8000;
 
-how to update *anaconda/conda*:
+how to update *anaconda/conda*::
+    updates conda tool and anaconda packages::
     conda update conda\; conda update anaconda;
 
-how to *scan/nmap* for OS operating system:
-    sudo nmap -O -v <host>; # Sudo may not be needed
+how to *scan/nmap* for OS operating system::
+    Scans a given host for operating system information::
+    nmap -O -v <host>;
 
-how to *find* a all file files by name:
-    find -iname <files/name:name>;
-how to *find* files file with max depth:
+how to *find* a all file files by name::
+    Find files given a case sensitive name (use -iname for insensitive)::
+    find -name <files/name:name>;
+
+how to *find* files file with max depth::
+    Find files up to a max depth::
     find -maxdepth <depth> -name <file/name:name>;
+
+how to copy move files with *rsync*::
+    Copies arbitrary data using compression::
+    rsync -avz <source> <dest>;
+
+how to copy move files with *rsync* from *remote/ssh/server*::
+    <dest> may be another remote server::
+    rsync -avz <user>@<host> <dest>;
+
+how to copy move files with *rsync* *remote/ssh/server*::
+    <src> may be another remote server::
+    rsync -avz <src> <user>@<host>;
+
+how to *exclude* files file with *rsync*::
+    Excludes a specific pattern from the transfer::
+    rsync -avz --exclude "<file/files/pattern:pattern>" <src/source:src> <dest/destination:dest>;
