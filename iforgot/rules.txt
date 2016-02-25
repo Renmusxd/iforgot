@@ -1,0 +1,10 @@
+## KEYWORDS : ARGUMENT ;
+## * denotes a vital keyword
+## <x> in command will be replaced by args
+
+how to change my *MAC* address to :
+    spoof set <to> <on>;
+how to change my *MAC* address random randomize:
+    spoof randomize <on>;
+how to update brew :
+    brew update; brew upgrade
