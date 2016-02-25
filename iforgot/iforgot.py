@@ -1,6 +1,8 @@
 import sys
+import os
 
-RULES_PATH = 'rules.txt'
+dir = os.path.abspath(__file__)
+RULES_PATH = dir+'/rules.txt'
 
 ESS_SCORE = 10
 KEY_SCORE = 3
