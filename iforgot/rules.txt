@@ -2,9 +2,31 @@
 ## * denotes a vital keyword
 ## <x> in command will be replaced by args
 
-how to change my *MAC* address to :
-    spoof set <to> <on>;
-how to change my *MAC* address random randomize:
-    spoof randomize <on>;
-how to update brew :
-    brew update; brew upgrade
+how to change my iforgot rules file:
+    nano $(which iforgot)/rules.txt
+
+how to change my *MAC/mac* address to :
+    spoof set <to:> en0;
+how to change my *MAC/mac* address to on:
+    spoof set <to:> <on:>;
+how to change my *MAC/mac* address random randomize:
+    spoof randomize <on:>;
+
+how to update *homebrew/brew* :
+    brew update; brew upgrade;
+
+how to *merge* *git* branches branch :
+    git checkout master\; git merge <branch>;
+
+how to run a *python* *simple/server/SimpleServer/http*:
+    python -m SimpleHTTPServer 8000;
+
+how to update *anaconda/conda*:
+    conda update conda\; conda update anaconda;
+
+how to *scan/nmap* for OS operating system:
+    sudo nmap -O -v <host> # Sudo may not be needed
+
+how to *find* a all file files by name:
+    find -iname <name>
+
