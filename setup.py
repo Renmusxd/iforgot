@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
         name="iforgot",
-        version="0.4",
+        version="0.4.1",
         description="A command line tool to help you remember",
         long_description="A command line tool to help you search for bash scripts",
         url="www.github.com/Renmusxd/iforgot",
