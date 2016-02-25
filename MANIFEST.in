@@ -1,0 +1,3 @@
+include *.txt
+recursive-include iforgot *.txt *.py
+prune examples/sample?/build

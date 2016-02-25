@@ -2,13 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
         name="iforgot",
-        version="0.3",
+        version="0.3.1",
         description="A command line tool to help you remember",
         long_description="A command line tool to help you search for bash scripts",
         url="www.github.com/Renmusxd/iforgot",
         author="Sumner Hearth",
         author_email="sumnernh@gmail.com",
         license="MIT",
+        packages=find_packages(),
+        include_package_data=True,
         classifiers=[
             # How mature is this project? Common values are
             #   3 - Alpha

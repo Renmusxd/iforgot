@@ -2,7 +2,7 @@
 ## * denotes a vital keyword
 ## <x> in command will be replaced by args
 
-how to change my iforgot rules file:
+how to edit change my *iforgot* rules file:
     nano $(which iforgot)/rules.txt
 
 how to change my *MAC/mac* address to :
@@ -18,6 +18,9 @@ how to update *homebrew/brew* :
 how to *merge* *git* branches branch :
     git checkout master\; git merge <branch>;
 
+how to get *git* *stat/status/missing/added* :
+    git status;
+
 how to run a *python* *simple/server/SimpleServer/http*:
     python -m SimpleHTTPServer 8000;
 
@@ -25,8 +28,9 @@ how to update *anaconda/conda*:
     conda update conda\; conda update anaconda;
 
 how to *scan/nmap* for OS operating system:
-    sudo nmap -O -v <host> # Sudo may not be needed
+    sudo nmap -O -v <host>; # Sudo may not be needed
 
 how to *find* a all file files by name:
-    find -iname <name>
-
+    find -iname <name>;
+how to *find* files file with max depth:
+    find -maxdepth <depth> -name <file>;
