@@ -3,6 +3,8 @@ import os
 
 dir = os.path.dirname(__file__)
 RULES_PATH = dir+'/rules.txt'
+RULES_FLAG = "RULES"
+
 
 ESS_SCORE = 10
 KEY_SCORE = 3
@@ -26,20 +28,33 @@ class Command:
             k = self.keywords[i]
             if k[0] == "*" and k[-1] == "*" and len(k) > 2:
                 self.keywords[i] = k[1:-1]
-                self.essentials.append(self.keywords[i])
+                self.essentials.append([k.strip() for k in self.keywords[i].split("/")])
         self.cmd = command
         self.flags = []
         self.args = []
         for i in xrange(len(self.cmd)):
-            if self.cmd[i][0] == "<" and self.cmd[i][-1] == ">" and len(self.cmd[i]) > 2:
-                self.flags += [self.cmd[i][1:-1]]
-                self.args += [i]
+            open_loc = self.cmd[i].find("<")
+            close_loc = self.cmd[i].find(">")
+            if open_loc!=-1 and close_loc!=-1:
+                flag = self.cmd[i][open_loc+1:close_loc]
+                if flag==RULES_FLAG:
+                    self.cmd[i] = RULES_PATH
+                else:
+                    flag_detail = flag.split(":")
+                    flag_options = flag_detail[0].split("/")
+                    for f in flag_options:
+                        self.flags.append(
+                            (f, self.cmd[i][:open_loc], self.cmd[i][close_loc+1:])
+                        )
+                        self.args += [i]
+                    if len(flag_detail)>1:
+                        flag_description = flag_detail[-1]
+                        self.cmd[i] = "<"+flag_description+">"
 
     def score(self, prompt):
         for ess in self.essentials:
-            any_of = [s.strip() for s in ess.split("/")]
             found = False
-            for e in any_of:
+            for e in ess:
                 if e in prompt:
                     found = True
                     break
@@ -61,10 +76,11 @@ class Command:
         while i < len(prompt):
             p = prompt[i]
             for j in xrange(len(self.flags)):
-                if p == self.flags[j]:
-                    if len(prompt)>i+1:
-                        cmd[self.args[j]] = prompt[i+1]
-                    i += 1
+                if p == self.flags[j][0]:
+                    ns = (self.keywords+[item for sublist in self.essentials for item in sublist])
+                    if len(prompt)>i+1 and prompt[i+1] not in ns:
+                        cmd[self.args[j]] = self.flags[j][1] + prompt[i+1] + self.flags[j][2]
+                        i += 1
             i += 1
         return " ".join(cmd)
 
@@ -127,8 +143,24 @@ def check(arglist):
 
 if __name__ == "__main__":
     args = sys.argv[1:]
+    # fix quotes
+    newargs = []
+    acc_arg = ""
+    adding = False
+    for arg in args:
+        if arg[0]=="\"":
+            acc_arg += arg
+            adding = True
+        if arg[-1]=="\"":
+            newargs.append(acc_arg)
+            acc_arg = ""
+            adding = False
+        if adding:
+            acc_arg += " " + arg
+        else:
+            newargs.append(arg)
     if len(args)>0:
-        check(args)
+        check(newargs)
     else:
         print("usage: iforgot <prompt>")
         print("example:")
