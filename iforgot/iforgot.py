@@ -34,23 +34,34 @@ class Command:
         self.flags = []
         self.args = []
         for i in xrange(len(self.cmd)):
-            open_loc = self.cmd[i].find("<")
-            close_loc = self.cmd[i].find(">")
-            if open_loc!=-1 and close_loc!=-1:
+            last_check = 0
+            open_loc = self.cmd[i].find("<",last_check)
+            close_loc = self.cmd[i].find(">",last_check)
+            while open_loc!=-1 and close_loc!=-1:
+                last_check = close_loc
                 flag = self.cmd[i][open_loc+1:close_loc]
                 if flag==RULES_FLAG:
                     self.cmd[i] = RULES_PATH
                 else:
                     flag_detail = flag.split(":")
                     flag_options = flag_detail[0].split("/")
+                    rep_text = "<"+flag+">"
+                    if len(flag_detail)==2:
+                        flag_description = flag_detail[1]
+                        self.cmd[i] = self.cmd[i].replace("<"+flag+">","<"+flag_description+">")
+                        # Change last_check
+                        diff = len(flag) - len(flag_description)
+                        last_check -= diff
+                        # Change representation
+                        rep_text = "<"+flag_description+">"
+                    elif len(flag_detail)>2:
+                        raise Exception("Error parsing rule for "+command)
+
                     for f in flag_options:
-                        self.flags.append(
-                            (f, self.cmd[i][:open_loc], self.cmd[i][close_loc+1:])
-                        )
-                        self.args += [i]
-                    if len(flag_detail)>1:
-                        flag_description = flag_detail[-1]
-                        self.cmd[i] = "<"+flag_description+">"
+                        self.flags.append((f, rep_text, i))
+
+                open_loc = self.cmd[i].find("<",last_check+1)
+                close_loc = self.cmd[i].find(">",last_check+1)
 
     def score(self, prompt):
         for ess in self.essentials:
@@ -76,16 +87,21 @@ class Command:
         if type(prompt) == str:
             prompt = prompt.split()
         cmd = self.cmd[:]
+        cmdreplace = [{} for x in xrange(len(cmd))]
         i = 0
         while i < len(prompt):
             p = prompt[i]
             for j in xrange(len(self.flags)):
-                if p == self.flags[j][0]:
+                key, flag, arg_index = self.flags[j]
+                if p == key:
                     ns = (self.keywords+[item for sublist in self.essentials for item in sublist])
                     if len(prompt)>i+1 and prompt[i+1] not in ns:
-                        cmd[self.args[j]] = self.flags[j][1] + prompt[i+1] + self.flags[j][2]
+                        cmdreplace[arg_index][flag] = prompt[i+1]
                         i += 1
             i += 1
+        for i in xrange(len(cmd)):
+            for k,v in cmdreplace[i].iteritems():
+                cmd[i] = cmd[i].replace(k, v)
         return " ".join(cmd)
 
     def __str__(self):

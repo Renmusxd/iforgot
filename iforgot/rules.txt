@@ -71,3 +71,44 @@ how to copy move files with *rsync* *remote/ssh/server*::
 how to *exclude* files file with *rsync*::
     Excludes a specific pattern from the transfer::
     rsync -avz --exclude "<file/files/pattern:pattern>" <src/source:src> <dest/destination:dest>;
+
+how to *copy* files with long names efficiently::
+    Copies a file to a file with the same name plus a bit ::
+    cp <file/path:path>{,<plus>};
+
+how to *move* files with long names efficiently::
+    Copies a file to a file with the same name plus a bit ::
+    mv <file/path:path>{,<plus>};
+
+how to *move/cd/backup/previous* back a directory::
+    Moves back to previous directory::
+    cp -;
+
+how to *repeat/rerun/run/last* last command::
+    Repeats previous command::
+    !!;
+
+how to *edit/change/last* last command::
+    Runs last command with changes::
+    ^<replace/edit:replacethis>^<with:withthis>;
+
+how to *rename/replace* *filename/filenames/file/files* multiple::
+    Renames multiple files by finding and replacing text::
+    rename 's/<string/replace/replacethis:replacethis>/<with/withthis:withthis>' <path/paths:paths>;
+
+how to *list* most recent files by modification date thor::
+    Summons power of Thor to list most recent files by modification date::
+    ls -thor;
+
+how to *list* *all/hidden/invisible* files::
+    Lists all files in directory::
+    ls -a;
+
+how to pipe to *clipboard* from command::
+    Pipes output to clipboard on OSX::
+    <command> | pbcopy;
+
+how to make banner text::
+    Makes a pretty banner of text::
+    figlet <text>;
+
