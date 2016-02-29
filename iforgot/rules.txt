@@ -48,6 +48,18 @@ how to *scan/nmap* for OS operating system::
     Scans a given host for operating system information::
     nmap -O -v <host>;
 
+how to *scan/nmap/TCP* scan nmap TCP::
+    Scans a host for general TCP ports::
+    nmap -sT <host>;
+
+how to *scan/nmap* scan nmap port range::
+    Scans a host for general TCP ports::
+    nmap -s<scantype/scan:scan> <host> -p <port/ports:ports>;
+
+how to *scan/nmap/SYN* scan nmap SYN stealth::
+    Scans a host for general ports using SYN stealth scan::
+    nmap -sS <host>;
+
 how to *find* a all file files by name::
     Find files given a case sensitive name (use -iname for insensitive)::
     find -name <files/name:name>;
